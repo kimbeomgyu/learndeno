@@ -24,6 +24,6 @@ jobs:
       - name: Lint Deno Module
         run: deno fmt --check
       - name: Build Deno Module
-        run: deno run --reload mod.ts
+        run: deno run --reload --allow-net mod.ts
       - name: Test Deno Module
         run: deno test --allow-net

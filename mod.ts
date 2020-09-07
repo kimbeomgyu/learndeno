@@ -12,22 +12,47 @@ books.set("2", {
   author: "Timothy C. Winegard",
 });
 
-const router = new Router();
-router
-  .get("/", (context) => {
-    context.response.body = "Hello world!";
-  })
-  .get("/book", (context) => {
-    context.response.body = Array.from(books.values());
-  })
-  .get("/book/:id", (context) => {
-    if (context.params && context.params.id && books.has(context.params.id)) {
-      context.response.body = books.get(context.params.id);
+export class OakServer {
+  private readonly hostname: string;
+  private readonly port: number;
+  private readonly app: Application;
+
+  constructor(hostname: string, port: number) {
+    this.hostname = hostname;
+    this.port = port;
+    const router = new Router();
+
+    router
+      .get("/", (context) => {
+        console.log("home page");
+        context.response.body = "Hello world!";
+      })
+      .get("/book", (context) => {
+        console.log("book page");
+        context.response.body = Array.from(books.values());
+      })
+      .get("/book/:id", (context) => {
+        if (context.params && context.params.id && books.has(context.params.id)) {
+          console.log(`book ${context.params.id} page`);
+          context.response.body = books.get(context.params.id);
+        }
+      });
+    // Create the Oak Application
+    this.app = new Application();
+    // Create the User route and associate it with the Oak router
+    // Associate the router with the application
+    this.app.use(router.routes());
+    this.app.use(router.allowedMethods());
+  }
+
+  async start(signal?: AbortSignal): Promise<void> {
+    console.log(`server listening at ${this.port}`);
+    let listenPromise: Promise<void>;
+    if (signal) {
+      listenPromise = this.app.listen({ hostname: this.hostname, port: this.port, signal });
+      return listenPromise;
+    } else {
+      return await this.app.listen({ port: this.port });
     }
-  });
-
-const app = new Application();
-app.use(router.routes());
-app.use(router.allowedMethods());
-
-await app.listen({ port: 8000 });
+  }
+}
