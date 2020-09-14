@@ -43,8 +43,10 @@ Deno.test("Get all books", async () => {
   assertEquals(books.length, 2);
   assertEquals(books[0]["id"], "1");
   assertEquals(books[0]["title"], "The Hound of the Baskervilles");
+  assertEquals(books[0]["author"], "Conan Doyle, Arthur");
   assertEquals(books[1]["id"], "2");
   assertEquals(books[1]["title"], "The Mosquito: A Human History of Our Deadliest Predator");
+  assertEquals(books[1]["author"], "Timothy C. Winegard");
 
   afterAll();
 });
