@@ -1,6 +1,5 @@
 import { OakServer } from "./mod.ts";
-import { assertEquals } from "./deps.ts";
-import axiosd from "https://deno.land/x/axiod/mod.ts";
+import { assertEquals, axiosd } from "./deps.ts";
 
 const hostname = "localhost";
 const port = 8000;
