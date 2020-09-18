@@ -16,9 +16,8 @@ jobs:
 
     name: Test with Deno ${{ matrix.deno }}
     steps:
-      - uses: actions/checkout@master
-
       - name: Setup Deno
+        uses: actions/checkout@master
         with:
           deno-version: ${{ matrix.deno }}
 
