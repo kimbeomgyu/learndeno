@@ -22,7 +22,8 @@ export class OakServer {
     console.log(`server listening at ${this.port}`);
     let listenPromise: Promise<void>;
     if (signal) {
-      listenPromise = this.app.listen({ hostname: this.hostname, port: this.port, signal });
+      const listen = { hostname: this.hostname, port: this.port, signal };
+      listenPromise = this.app.listen(listen);
       return listenPromise;
     } else {
       return await this.app.listen({ port: this.port });

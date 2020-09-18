@@ -38,14 +38,27 @@ Deno.test("Get all books", async () => {
   const response = await axiosd.get(`${httpUrl}/book`);
   const books = response.data;
 
+  const testBooks = [
+    {
+      id: "1",
+      title: "The Hound of the Baskervilles",
+      author: "Conan Doyle, Arthur",
+    },
+    {
+      id: "2",
+      title: "The Mosquito: A Human History of Our Deadliest Predator",
+      author: "Timothy C. Winegard",
+    },
+  ];
+
   assertEquals(response.status, 200);
   assertEquals(books.length, 2);
-  assertEquals(books[0]["id"], "1");
-  assertEquals(books[0]["title"], "The Hound of the Baskervilles");
-  assertEquals(books[0]["author"], "Conan Doyle, Arthur");
-  assertEquals(books[1]["id"], "2");
-  assertEquals(books[1]["title"], "The Mosquito: A Human History of Our Deadliest Predator");
-  assertEquals(books[1]["author"], "Timothy C. Winegard");
+  assertEquals(books[0]["id"], testBooks[0]["id"]);
+  assertEquals(books[0]["title"], testBooks[0]["title"]);
+  assertEquals(books[0]["author"], testBooks[0]["author"]);
+  assertEquals(books[1]["id"], testBooks[1]["id"]);
+  assertEquals(books[1]["title"], testBooks[1]["title"]);
+  assertEquals(books[1]["author"], testBooks[1]["author"]);
 
   afterAll();
 });
