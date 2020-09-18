@@ -32,24 +32,24 @@ async function beforeAll() {
   await startServer();
 }
 
+const testBooks = [
+  {
+    id: "1",
+    title: "The Hound of the Baskervilles",
+    author: "Conan Doyle, Arthur",
+  },
+  {
+    id: "2",
+    title: "The Mosquito: A Human History of Our Deadliest Predator",
+    author: "Timothy C. Winegard",
+  },
+];
+
 Deno.test("Get all books", async () => {
   await beforeAll();
 
   const response = await axiosd.get(`${httpUrl}/book`);
   const books = response.data;
-
-  const testBooks = [
-    {
-      id: "1",
-      title: "The Hound of the Baskervilles",
-      author: "Conan Doyle, Arthur",
-    },
-    {
-      id: "2",
-      title: "The Mosquito: A Human History of Our Deadliest Predator",
-      author: "Timothy C. Winegard",
-    },
-  ];
 
   assertEquals(response.status, 200);
   assertEquals(books.length, 2);
